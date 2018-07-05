@@ -360,4 +360,20 @@ public class DBServiceImpl implements DBService {
 		jdbcTemplate.update(sql, paramMap);
 	}
 
+	@Override
+	public User getUser(String login) {
+		String sql = "select * from user where login=:login";
+		MapSqlParameterSource paramMap = new MapSqlParameterSource("login", login);
+		return jdbcTemplate.queryForObject(sql, paramMap, new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				User user = new User();
+				user.setLogin(rs.getString("login"));
+				user.setPassword(rs.getString("password"));
+
+				return user;
+			}
+		});
+	}
+
 }

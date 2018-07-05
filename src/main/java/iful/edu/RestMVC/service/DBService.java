@@ -6,8 +6,11 @@ import iful.edu.RestMVC.model.Cinema;
 import iful.edu.RestMVC.model.CinemaSession;
 import iful.edu.RestMVC.model.Film;
 import iful.edu.RestMVC.model.Hall;
+import iful.edu.RestMVC.model.User;
 
 public interface DBService {
+	User getUser(String login);
+
 	Film getFilmByID(int id);
 
 	Hall getHallByID(int id);

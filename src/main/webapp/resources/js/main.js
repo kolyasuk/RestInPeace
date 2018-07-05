@@ -15,20 +15,23 @@ function doAjax() {
 					$("table").append($("<tr></tr>"));
 					$("table").append($("<tr></tr>"));
 					$.each(element, function(key, element1) {
-						if(index === 0 && key != "image"){
+						if(index === 0){
 							$("tr:first-child").append($("<th>"+key+"</th>"));
 						}
-						if (key != "image") {
-							if(key != "description"){
-								$("tr:last-child").append(
-										$("<td></td>").text(element1));
-							}else{
-								$("tr:last-child").append(
-										$("<td></td>").text(element1.toString().substr(0, 55)+".."));
-							}
-							
+						if(key === "description"){
+							$("tr:last-child").append(
+									$("<td></td>").text(element1.toString().substr(0, 55)+".."));
+						}else if(key === "image"){
+							var img = $('<img />').attr({
+					            'src': 'image/displayFilmImage?id='+element.id,
+					            'alt': 'Image',
+					            'width': 200,
+					            'height' : 280
+					        }).appendTo('tr:last-child');
+						}else{
+							$("tr:last-child").append($("<td></td>").text(element1));
 						}
-
+						
 					});
 					var deleteButton = $('<input type="button" onclick="deleteFilm('
 							+ element.id + ')" value="Delete"/>');
@@ -128,6 +131,7 @@ function doAjax() {
 	}
 	
 	function createForm() {
+		$("body").append($('<sec:authorize access="!isAuthenticated()"></sec:authorize>'));
 		$("body").append($('<h2 style="text-align: center;">Here you can input and edit film:</h2>'));
 		$("body").append($('<ul class="form-style-1">'));
 		$("ul").append($('<form name="myForm" id="myForm" method="POST"></form>'));
